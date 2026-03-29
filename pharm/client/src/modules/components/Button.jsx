@@ -1,4 +1,3 @@
-// src/components/ui/Button.jsx
 import React from "react";
 
 export default function Button({

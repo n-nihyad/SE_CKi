@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router";
 import tobi from "../auth/images/tobi.jpg";
 
 export default function Sidebar() {

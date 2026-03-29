@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 
 import AuthLayout from "./modules/auth/AuthLayout";
 import Login from "./modules/auth/LoginForm";
@@ -18,10 +18,10 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         {/* PUBLIC */}
-        {/* <Route element={<AuthLayout />}>
+        <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-        </Route> */}
+        </Route>
 
         {/* PRIVATE */}
         <Route
