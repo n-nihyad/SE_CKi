@@ -1,16 +1,5 @@
 @import "tailwindcss";
 
-body {
-  margin: 0;
-}
-
-#root {
-  max-width: 100%;
-  margin: 0 auto;
-  min-height: 100svh;
-  box-sizing: border-box;
-}
-
 :root {
   --text: #6b6375;
   --text-h: #08060d;
@@ -61,4 +50,40 @@ body {
   #social .button-icon {
     filter: invert(1) brightness(2);
   }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  background-color: #f1f5f9;
+  color: #0f172a;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e2e8f0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
 }
