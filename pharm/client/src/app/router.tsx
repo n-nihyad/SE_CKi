@@ -9,6 +9,7 @@ import RegisterPage from "../pages/auth/RegisterPage";
 import ForgotPasswordPage from "../pages/auth/ForgotPasswordPage";
 
 import DashboardPage from "../pages/common/DashBoardPage";
+import ProfilePage from "../pages/common/ProfilePage";
 
 import TakeMedicinePage from "../pages/pharmacist/TakeMedicinePage";
 import ReturnMedicinePage from "../pages/pharmacist/ReturnMedicinePage";
@@ -20,7 +21,9 @@ import ReportPage from "../pages/warehouse-manager/ReportPage";
 import ExportPage from "../pages/storekeeper/ExportPage";
 import ImportPage from "../pages/storekeeper/ImportPage";
 import UpdateInventoryPage from "../pages/storekeeper/UpdateInventoryPage";
+
 import StockHistoryPage from "../pages/common/StockHistoryPage";
+import WarehouseMapPage from "../pages/common/WarehouseMapPage";
 
 export default function AppRouter() {
   return (
@@ -36,6 +39,7 @@ export default function AppRouter() {
       <Route element={<ProtectedRoute />}>
         <Route element={<MainLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
 
           <Route element={<ProtectedRoute allowedRoles={["requestor"]} />}>
             <Route path="/take-medicine" element={<TakeMedicinePage />} />
@@ -51,6 +55,7 @@ export default function AppRouter() {
             }
           >
             <Route path="/stock-history" element={<StockHistoryPage />} />
+            <Route path="/map" element={<WarehouseMapPage />} />
           </Route>
 
           <Route

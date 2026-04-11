@@ -53,13 +53,13 @@ export default function MedicineHistoryPage() {
     products.find((p) => p.id === id)?.name || "Unknown";
 
   return (
-    <div className="flex h-full flex-col gap-5 p-1">
+    <div className="flex h-full flex-col gap-5 p-4">
       {/* Header */}
-      <div className="shrink-0">
-        <h1 className="text-lg font-semibold text-slate-800">
+      <div>
+        <h1 className="text-3xl font-extrabold text-gray-900">
           Lịch sử yêu cầu thuốc
         </h1>
-        <p className="mt-0.5 text-sm text-slate-400">
+        <p className="text-sm text-gray-500 mt-1">
           Danh sách các yêu cầu lấy / trả thuốc
         </p>
       </div>

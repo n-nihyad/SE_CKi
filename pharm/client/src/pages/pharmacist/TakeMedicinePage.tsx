@@ -92,14 +92,14 @@ export default function TakeMedicinePage() {
   };
 
   return (
-    <div className="flex h-full flex-col gap-5 p-1">
+    <div className="flex h-full flex-col gap-5 p-4">
       {/* ── Header ── */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-slate-800">
+          <h1 className="text-3xl font-extrabold text-gray-900">
             Yêu cầu xuất kho
           </h1>
-          <p className="mt-0.5 text-sm text-slate-400">
+          <p className="text-sm text-gray-500 mt-1">
             Chọn thuốc và số lượng — hệ thống tự ưu tiên lô theo FEFO.
           </p>
         </div>

@@ -125,11 +125,13 @@ export default function DashboardPage() {
   const hasBottom = statsBottom.length > 0;
 
   return (
-    <div className="flex h-full w-full flex-col gap-4 p-6">
+    <div className="flex h-full w-full flex-col gap-4 p-4">
       {/* greeting */}
-      <div className="shrink-0">
-        <h1 className="text-lg font-semibold text-slate-800">Tổng quan kho</h1>
-        <p className="text-sm text-slate-400">Cập nhật theo thời gian thực</p>
+      <div>
+        <h1 className="text-3xl font-extrabold text-gray-900">Tổng quan kho</h1>
+        <p className="text-sm text-gray-500 mt-1">
+          Cập nhật theo thời gian thực
+        </p>
       </div>
 
       {/* top stats — flex-1 nếu không có bottom, không thì cố định */}
@@ -142,16 +144,16 @@ export default function DashboardPage() {
             className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-6"
           >
             <div className="flex items-start justify-between">
-              <span className="text-xs font-medium uppercase tracking-wide text-slate-400">
+              <span className="text-xl font-medium uppercase tracking-wide text-slate-400">
                 {s.title}
               </span>
               <div className={`rounded-lg p-2 ${s.iconBg}`}>{s.icon}</div>
             </div>
-            <div>
+            <div className="flex-1 flex flex-col justify-center items-center">
               <p className={`text-4xl font-bold leading-none ${s.valueColor}`}>
                 {s.value}
               </p>
-              <p className="mt-2 text-xs text-slate-400">{s.sub}</p>
+              <p className="mt-2 text-sm text-slate-400">{s.sub}</p>
             </div>
           </div>
         ))}
@@ -168,18 +170,18 @@ export default function DashboardPage() {
               }`}
             >
               <div className="flex items-start justify-between">
-                <span className="text-xs font-medium uppercase tracking-wide text-slate-400">
+                <span className="text-xl font-medium uppercase tracking-wide text-slate-400">
                   {s.title}
                 </span>
                 <div className={`rounded-lg p-2 ${s.iconBg}`}>{s.icon}</div>
               </div>
-              <div>
+              <div className="flex-1 flex flex-col justify-center items-center">
                 <p
                   className={`text-4xl font-bold leading-none ${s.valueColor}`}
                 >
                   {s.value}
                 </p>
-                <p className="mt-2 text-xs text-slate-400">{s.sub}</p>
+                <p className="mt-2 text-sm text-slate-400">{s.sub}</p>
               </div>
               {"progress" in s && typeof s.progress === "number" && (
                 <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
