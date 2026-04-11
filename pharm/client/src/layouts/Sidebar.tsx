@@ -20,10 +20,28 @@ import logo from "../assets/images/logo.webp";
 
 const menu = [
   {
-    name: "Dashboard",
+    name: "Tổng quan",
     path: "/dashboard",
     icon: LayoutDashboard,
     roles: ["requestor", "warehouse_manager", "storekeeper"],
+  },
+  {
+    name: "Kho thuốc",
+    path: "/inventory",
+    icon: Boxes,
+    roles: ["warehouse_manager", "storekeeper"],
+  },
+  {
+    name: "Lịch sử kho",
+    path: "/stock-history",
+    icon: History,
+    roles: ["storekeeper", "warehouse_manager"],
+  },
+  {
+    name: "Sơ đồ kho",
+    path: "/map",
+    icon: Map,
+    roles: ["storekeeper", "warehouse_manager"],
   },
   {
     name: "Lấy thuốc",
@@ -44,18 +62,6 @@ const menu = [
     roles: ["requestor"],
   },
   {
-    name: "Kho thuốc",
-    path: "/inventory",
-    icon: Boxes,
-    roles: ["warehouse_manager"],
-  },
-  {
-    name: "Báo cáo",
-    path: "/report",
-    icon: FileBarChart2,
-    roles: ["warehouse_manager"],
-  },
-  {
     name: "Xuất kho",
     path: "/export",
     icon: PackageMinus,
@@ -68,22 +74,10 @@ const menu = [
     roles: ["storekeeper"],
   },
   {
-    name: "Cập nhật kho",
-    path: "/inventory-update",
-    icon: Boxes,
-    roles: ["storekeeper"],
-  },
-  {
-    name: "Lịch sử kho",
-    path: "/stock-history",
-    icon: History,
-    roles: ["storekeeper", "warehouse_manager"],
-  },
-  {
-    name: "Sơ đồ kho",
-    path: "/map",
-    icon: Map,
-    roles: ["storekeeper", "warehouse_manager"],
+    name: "Báo cáo",
+    path: "/report",
+    icon: FileBarChart2,
+    roles: ["warehouse_manager"],
   },
 ];
 
@@ -113,20 +107,20 @@ export default function Sidebar() {
   );
 
   return (
-    <aside className="flex h-screen max-w-80 flex-col bg-white border-r border-slate-100 rounded-xl">
+    <aside className="flex h-screen max-w-70 flex-col bg-white border-r border-slate-100 rounded-xl">
       <div className="flex gap-2 px-1 py-2 h-25">
         <Link to="/dashboard" className="h-full">
           <img
             src={logo}
             alt="logo"
-            className="h-full w-full rounded-lg object-cover"
+            className="h-full w-20 rounded-lg object-cover"
           />
         </Link>
         <div className="h-full flex flex-col justify-center">
-          <p className="text-2xl font-bold text-slate-800 leading-none">
+          <p className="text-2xl w-45 font-bold text-slate-800 leading-none">
             Pharma WMS
           </p>
-          <p className="mt-0.5 text-sm text-slate-400">Medicine Inventory</p>
+          <p className="mt-0.5 text-sm text-slate-400">Kho thuốc</p>
         </div>
       </div>
       <div className="h-10 text-3xl font-bold text-center mt-5">Menu</div>

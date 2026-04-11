@@ -15,12 +15,11 @@ import TakeMedicinePage from "../pages/pharmacist/TakeMedicinePage";
 import ReturnMedicinePage from "../pages/pharmacist/ReturnMedicinePage";
 import MedicineHistoryPage from "../pages/pharmacist/MedicineHistoryPage";
 
-import InventoryPage from "../pages/warehouse-manager/InventoryPage";
+import InventoryPage from "../pages/common/InventoryPage";
 import ReportPage from "../pages/warehouse-manager/ReportPage";
 
 import ExportPage from "../pages/storekeeper/ExportPage";
 import ImportPage from "../pages/storekeeper/ImportPage";
-import UpdateInventoryPage from "../pages/storekeeper/UpdateInventoryPage";
 
 import StockHistoryPage from "../pages/common/StockHistoryPage";
 import WarehouseMapPage from "../pages/common/WarehouseMapPage";
@@ -56,19 +55,18 @@ export default function AppRouter() {
           >
             <Route path="/stock-history" element={<StockHistoryPage />} />
             <Route path="/map" element={<WarehouseMapPage />} />
+            <Route path="/inventory" element={<InventoryPage />} />
           </Route>
 
           <Route
             element={<ProtectedRoute allowedRoles={["warehouse_manager"]} />}
           >
-            <Route path="/inventory" element={<InventoryPage />} />
             <Route path="/report" element={<ReportPage />} />
           </Route>
 
           <Route element={<ProtectedRoute allowedRoles={["storekeeper"]} />}>
             <Route path="/export" element={<ExportPage />} />
             <Route path="/import" element={<ImportPage />} />
-            <Route path="/inventory-update" element={<UpdateInventoryPage />} />
           </Route>
         </Route>
       </Route>

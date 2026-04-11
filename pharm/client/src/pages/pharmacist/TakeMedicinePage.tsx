@@ -96,11 +96,9 @@ export default function TakeMedicinePage() {
       {/* ── Header ── */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-extrabold text-gray-900">
-            Yêu cầu xuất kho
-          </h1>
+          <h1 className="text-3xl font-extrabold text-gray-900">Lấy thuốc</h1>
           <p className="text-sm text-gray-500 mt-1">
-            Chọn thuốc và số lượng — hệ thống tự ưu tiên lô theo FEFO.
+            Chọn thuốc và số lượng, tạo yêu cầu xuất thuốc
           </p>
         </div>
         <div className="flex items-center gap-2 rounded-lg border border-blue-100 bg-blue-50 px-4 py-2">

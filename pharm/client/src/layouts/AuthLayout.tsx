@@ -1,6 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
 
 import bg1 from "../assets/images/slide1.jpg";
 import bg2 from "../assets/images/slide2.jpg";
@@ -39,7 +38,7 @@ export default function AuthLayout() {
         <div className="absolute inset-0 bg-black/30" />
 
         <div className="absolute bottom-10 left-10 text-white">
-          <h1 className="text-4xl font-bold">Medicine Inventory System</h1>
+          <h1 className="text-4xl font-bold">HỆ THỐNG QUẢN LÍ KHO THUỐC</h1>
           <p className="mt-2 text-lg">
             Quản lý thuốc, kho và xuất nhập hiệu quả
           </p>
@@ -48,18 +47,7 @@ export default function AuthLayout() {
 
       {/* Right */}
       <div className="relative flex w-full items-center justify-center overflow-hidden bg-white md:w-2/5">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={location.pathname}
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -40 }}
-            transition={{ duration: 0.3 }}
-            className="w-full max-w-md px-8"
-          >
-            <Outlet />
-          </motion.div>
-        </AnimatePresence>
+        <Outlet />
       </div>
     </div>
   );

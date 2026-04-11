@@ -34,37 +34,46 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-col items-center w-full mt-20">
-      <h1 className="text-2xl font-bold mb-10">Login</h1>
+      <h1 className="text-3xl font-bold mb-10">Đăng nhập</h1>
 
       <div className="w-80 flex flex-col gap-4">
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="rounded-lg border border-slate-300 px-4 py-2"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="rounded-lg border border-slate-300 px-4 py-2"
-        />
-
-        {error && <p className="text-sm text-red-500">{error}</p>}
-
-        <button
-          onClick={handleLogin}
-          className="mt-2 rounded-lg bg-red-500 py-2 font-semibold text-white transition hover:bg-red-600"
+        <form
+          onSubmit={(e) => {
+            e.preventDefault(); // tránh reload trang
+            handleLogin();
+          }}
+          className="w-80 flex flex-col gap-3"
         >
-          Login
-        </button>
+          <input
+            type="text"
+            placeholder="Nhập username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="rounded-lg border border-slate-300 px-4 py-2"
+          />
 
-        <p>
-          Don't have an account?{" "}
+          <input
+            type="password"
+            placeholder="Nhập mật khẩu"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="rounded-lg border border-slate-300 px-4 py-2"
+          />
+
+          {error && <p className="text-sm text-red-500">{error}</p>}
+
+          <button
+            type="submit"
+            className="rounded-lg bg-red-500 py-2 font-semibold text-white transition hover:bg-red-600"
+          >
+            Đăng nhập
+          </button>
+        </form>
+
+        <p className="text-center">
+          Chưa có tài khoản?{" "}
           <Link to="/register" className="text-teal-700">
-            Create one
+            Tạo tài khoản
           </Link>
         </p>
       </div>
