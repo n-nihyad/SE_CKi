@@ -1,18 +1,29 @@
 // export const ROUTES = {
+//   /* ================= AUTH ================= */
 //   LOGIN: "/login",
 //   REGISTER: "/register",
+//   FORGOT_PASSWORD: "/forgot-password",
 
+//   /* ================= COMMON ================= */
 //   DASHBOARD: "/dashboard",
+//   PROFILE: "/profile",
 
-//   TAKE_MEDICINE: "/take-medicine",
-//   RETURN_MEDICINE: "/return-medicine",
-//   MEDICINE_HISTORY: "/medicine-history",
-
+//   /* ================= INVENTORY ================= */
 //   INVENTORY: "/inventory",
-//   EXPORT_REQUEST: "/export-request",
-//   IMPORT_REQUEST: "/import-request",
-//   REPORT: "/report",
+//   INVENTORY_MAP: "/inventory/map",
 
-//   STOREKEEPER_EXPORT: "/storekeeper/export",
-//   STOREKEEPER_IMPORT: "/storekeeper/import",
+//   STOCK_IMPORT: "/stock-import",
+//   STOCK_EXPORT: "/stock-export",
+//   STOCK_HISTORY: "/stock-history",
+
+//   /* ================= PHARMACIST ================= */
+//   MEDICINE: "/medicine",
+//   MEDICINE_REQUEST: "/medicine-request",
+//   MEDICINE_REQUEST_CREATE: "/medicine-request/create",
+
+//   /* ================= AUDIT ================= */
+//   AUDIT: "/inventory/audit",
+//   AUDIT_CREATE: "/inventory/audit/create",
+
+//   // RETURN_MEDICINE: "/return-medicine",
 // };

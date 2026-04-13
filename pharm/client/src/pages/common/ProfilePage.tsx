@@ -129,7 +129,7 @@ export default function ProfilePage() {
 
         <div className="flex-1 bg-white border rounded-xl p-6 flex flex-col gap-10">
           <div className="pt-4 flex flex-col gap-6">
-            <h2 className="text-xl font-semibold text-gray-800">
+            <h2 className="text-xl font-se~mibold text-gray-800">
               Đổi mật khẩu
             </h2>
 

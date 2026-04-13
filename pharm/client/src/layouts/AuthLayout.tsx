@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import bg1 from "../assets/images/slide1.jpg";
@@ -6,15 +6,14 @@ import bg2 from "../assets/images/slide2.jpg";
 import bg3 from "../assets/images/slide3.jpg";
 import bg4 from "../assets/images/slide4.jpg";
 
-const images = [bg1, bg2, bg3, bg4];
+const backgroundImages = [bg1, bg2, bg3, bg4];
 
 export default function AuthLayout() {
   const [current, setCurrent] = useState(0);
-  const location = useLocation();
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % images.length);
+      setCurrent((prev) => (prev + 1) % backgroundImages.length);
     }, 3000);
 
     return () => clearInterval(interval);
@@ -24,7 +23,7 @@ export default function AuthLayout() {
     <div className="flex h-screen">
       {/* Left */}
       <div className="relative hidden md:block md:w-3/5 overflow-hidden">
-        {images.map((image, index) => (
+        {backgroundImages.map((image, index) => (
           <img
             key={index}
             src={image}
@@ -34,6 +33,17 @@ export default function AuthLayout() {
             }`}
           />
         ))}
+
+        <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-2">
+          {backgroundImages.map((_, i) => (
+            <div
+              key={i}
+              className={`h-2 w-2 rounded-full ${
+                i === current ? "bg-white" : "bg-white/50"
+              }`}
+            />
+          ))}
+        </div>
 
         <div className="absolute inset-0 bg-black/30" />
 

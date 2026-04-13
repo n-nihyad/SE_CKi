@@ -6,6 +6,12 @@ interface ProtectedRouteProps {
   allowedRoles?: string[];
 }
 
+const homeByRole: Record<string, string> = {
+  requestor: "/medicine",
+  manager: "/dashboard",
+  storekeeper: "/dashboard",
+};
+
 export default function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
   const user = useSelector((state: RootState) => state.auth.user);
 
@@ -14,7 +20,8 @@ export default function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
   }
 
   if (allowedRoles && !allowedRoles.includes(user.role)) {
-    return <Navigate to="/dashboard" replace />;
+    const home = homeByRole[user.role] || "/login";
+    return <Navigate to={home} replace />;
   }
 
   return <Outlet />;

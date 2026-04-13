@@ -11,9 +11,22 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
   const handleLogin = () => {
+    const trimmedUsername = username.trim();
+    const trimmedPassword = password.trim();
+
+    if (!trimmedUsername) {
+      setError("Vui lòng nhập tài khoản");
+      return;
+    }
+    if (!trimmedPassword) {
+      setError("Vui lòng nhập mật khẩu");
+      return;
+    }
+
     const user = fakeUsers.find(
-      (u) => u.username === username && u.password === password,
+      (u) => u.username === trimmedUsername && u.password === trimmedPassword,
     );
 
     if (!user) {
@@ -39,7 +52,7 @@ export default function LoginPage() {
       <div className="w-80 flex flex-col gap-4">
         <form
           onSubmit={(e) => {
-            e.preventDefault(); // tránh reload trang
+            e.preventDefault();
             handleLogin();
           }}
           className="w-80 flex flex-col gap-3"
@@ -48,7 +61,10 @@ export default function LoginPage() {
             type="text"
             placeholder="Nhập username"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => {
+              setUsername(e.target.value);
+              setError("");
+            }}
             className="rounded-lg border border-slate-300 px-4 py-2"
           />
 
@@ -56,7 +72,10 @@ export default function LoginPage() {
             type="password"
             placeholder="Nhập mật khẩu"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setError("");
+            }}
             className="rounded-lg border border-slate-300 px-4 py-2"
           />
 

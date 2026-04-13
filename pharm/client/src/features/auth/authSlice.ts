@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 interface User {
   id: number;
   name: string;
-  role: "requestor" | "warehouse_manager" | "storekeeper";
+  role: "requestor" | "manager" | "storekeeper";
 }
 
 interface AuthState {
@@ -19,22 +19,22 @@ const initialState: AuthState = {
 export const fakeUsers = [
   {
     id: 1,
-    username: "doctor",
-    password: "123456",
+    username: "a",
+    password: "123",
     name: "Bác sĩ",
     role: "requestor",
   },
   {
     id: 3,
-    username: "mng",
-    password: "123456",
+    username: "b",
+    password: "123",
     name: "Quản lí kho",
-    role: "warehouse_manager",
+    role: "manager",
   },
   {
     id: 4,
-    username: "str",
-    password: "123456",
+    username: "c",
+    password: "123",
     name: "Thủ kho",
     role: "storekeeper",
   },

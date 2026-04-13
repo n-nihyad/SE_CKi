@@ -8,21 +8,23 @@ import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
 import ForgotPasswordPage from "../pages/auth/ForgotPasswordPage";
 
-import DashboardPage from "../pages/common/DashBoardPage";
+import DashboardPage from "../pages/common/skpmng/DashBoardPage";
 import ProfilePage from "../pages/common/ProfilePage";
 
-import TakeMedicinePage from "../pages/pharmacist/TakeMedicinePage";
-import ReturnMedicinePage from "../pages/pharmacist/ReturnMedicinePage";
-import MedicineHistoryPage from "../pages/pharmacist/MedicineHistoryPage";
+import TakeRequestPage from "../pages/pharmacist/TakeRequestPage";
+// import ReturnMedicinePage from "../pages/pharmacist/ReturnRequestPage";
+import RequestHistoryPage from "../pages/pharmacist/RequestHistoryPage";
+import MedicinePage from "../pages/common/rqtmng/MedicinePage";
 
-import InventoryPage from "../pages/common/InventoryPage";
-import ReportPage from "../pages/warehouse-manager/ReportPage";
+import InventoryPage from "../pages/common/skpmng/InventoryPage";
+import StockHistoryPage from "../pages/common/skpmng/StockHistoryPage";
+import WarehouseMapPage from "../pages/common/skpmng/WarehouseMapPage";
+
+import AuditPage from "../pages/warehouse-manager/AuditPage";
+import CreateAuditSessionPage from "../pages/warehouse-manager/CreateAuditSessionPage";
 
 import ExportPage from "../pages/storekeeper/ExportPage";
 import ImportPage from "../pages/storekeeper/ImportPage";
-
-import StockHistoryPage from "../pages/common/StockHistoryPage";
-import WarehouseMapPage from "../pages/common/WarehouseMapPage";
 
 export default function AppRouter() {
   return (
@@ -37,36 +39,41 @@ export default function AppRouter() {
       {/* Protected routes */}
       <Route element={<ProtectedRoute />}>
         <Route element={<MainLayout />}>
-          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-
-          <Route element={<ProtectedRoute allowedRoles={["requestor"]} />}>
-            <Route path="/take-medicine" element={<TakeMedicinePage />} />
-            <Route path="/return-medicine" element={<ReturnMedicinePage />} />
-            <Route path="/medicine-history" element={<MedicineHistoryPage />} />
-          </Route>
 
           <Route
             element={
-              <ProtectedRoute
-                allowedRoles={["storekeeper", "warehouse_manager"]}
-              />
+              <ProtectedRoute allowedRoles={["storekeeper", "manager"]} />
             }
           >
-            <Route path="/stock-history" element={<StockHistoryPage />} />
-            <Route path="/map" element={<WarehouseMapPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/inventory" element={<InventoryPage />} />
+            <Route path="/inventory/map" element={<WarehouseMapPage />} />
+            <Route path="/stock-history" element={<StockHistoryPage />} />
           </Route>
 
           <Route
-            element={<ProtectedRoute allowedRoles={["warehouse_manager"]} />}
+            element={<ProtectedRoute allowedRoles={["requestor", "manager"]} />}
           >
-            <Route path="/report" element={<ReportPage />} />
+            <Route path="/medicine" element={<MedicinePage />} />
+          </Route>
+
+          <Route element={<ProtectedRoute allowedRoles={["requestor"]} />}>
+            <Route path="/medicine-request" element={<RequestHistoryPage />} />
+            <Route
+              path="/medicine-request/create"
+              element={<TakeRequestPage />}
+            />
+          </Route>
+
+          <Route element={<ProtectedRoute allowedRoles={["manager"]} />}>
+            <Route path="/audit" element={<AuditPage />} />
+            <Route path="/audit/create" element={<CreateAuditSessionPage />} />
           </Route>
 
           <Route element={<ProtectedRoute allowedRoles={["storekeeper"]} />}>
-            <Route path="/export" element={<ExportPage />} />
-            <Route path="/import" element={<ImportPage />} />
+            <Route path="/stock-export" element={<ExportPage />} />
+            <Route path="/stock-import" element={<ImportPage />} />
           </Route>
         </Route>
       </Route>

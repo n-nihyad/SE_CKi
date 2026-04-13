@@ -12,8 +12,6 @@ import {
   LogOut,
   PackagePlus,
   PackageMinus,
-  RotateCcw,
-  Map,
 } from "lucide-react";
 
 import logo from "../assets/images/logo.webp";
@@ -23,72 +21,60 @@ const menu = [
     name: "Tổng quan",
     path: "/dashboard",
     icon: LayoutDashboard,
-    roles: ["requestor", "warehouse_manager", "storekeeper"],
+    roles: ["storekeeper", "manager"],
+  },
+  {
+    name: "Danh sách thuốc",
+    path: "/medicine",
+    icon: Pill,
+    roles: ["requestor", "manager"],
+  },
+  {
+    name: "Yêu cầu lấy thuốc",
+    path: "/medicine-request",
+    icon: History,
+    roles: ["requestor"],
   },
   {
     name: "Kho thuốc",
     path: "/inventory",
     icon: Boxes,
-    roles: ["warehouse_manager", "storekeeper"],
+    roles: ["storekeeper", "manager"],
   },
   {
     name: "Lịch sử kho",
     path: "/stock-history",
     icon: History,
-    roles: ["storekeeper", "warehouse_manager"],
+    roles: ["storekeeper", "manager"],
   },
   {
-    name: "Sơ đồ kho",
-    path: "/map",
-    icon: Map,
-    roles: ["storekeeper", "warehouse_manager"],
-  },
-  {
-    name: "Lấy thuốc",
-    path: "/take-medicine",
-    icon: Pill,
-    roles: ["requestor"],
-  },
-  {
-    name: "Trả thuốc",
-    path: "/return-medicine",
-    icon: RotateCcw,
-    roles: ["requestor"],
-  },
-  {
-    name: "Lịch sử",
-    path: "/medicine-history",
-    icon: History,
-    roles: ["requestor"],
-  },
-  {
-    name: "Xuất kho",
-    path: "/export",
+    name: "Yêu cầu xuất kho",
+    path: "/stock-export",
     icon: PackageMinus,
     roles: ["storekeeper"],
   },
   {
-    name: "Nhập kho",
-    path: "/import",
+    name: "Thông báo nhập kho",
+    path: "/stock-import",
     icon: PackagePlus,
     roles: ["storekeeper"],
   },
   {
-    name: "Báo cáo",
-    path: "/report",
+    name: "Kiểm kê",
+    path: "/audit",
     icon: FileBarChart2,
-    roles: ["warehouse_manager"],
+    roles: ["manager"],
   },
 ];
 
 const roleLabel: Record<string, string> = {
   requestor: "Người yêu cầu",
-  warehouse_manager: "Quản lý kho",
+  manager: "Quản lý kho",
   storekeeper: "Thủ kho",
 };
 const roleColor: Record<string, string> = {
   requestor: "bg-blue-50 text-blue-600",
-  warehouse_manager: "bg-violet-50 text-violet-600",
+  manager: "bg-violet-50 text-violet-600",
   storekeeper: "bg-emerald-50 text-emerald-600",
 };
 
