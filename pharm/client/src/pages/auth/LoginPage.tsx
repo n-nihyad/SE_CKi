@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { login, fakeUsers } from "../../features/auth/authSlice";
+import { login as loginApi } from "../../api/authApi";
+import { loginSuccess } from "../../features/auth/authSlice";
 
 export default function LoginPage() {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const trimmedUsername = username.trim();
     const trimmedPassword = password.trim();
 
@@ -20,29 +21,39 @@ export default function LoginPage() {
       setError("Vui lòng nhập tài khoản");
       return;
     }
+
     if (!trimmedPassword) {
       setError("Vui lòng nhập mật khẩu");
       return;
     }
 
-    const user = fakeUsers.find(
-      (u) => u.username === trimmedUsername && u.password === trimmedPassword,
-    );
+    try {
+      const res = await loginApi({
+        username: trimmedUsername,
+        password: trimmedPassword,
+      });
 
-    if (!user) {
+      const { token, user } = res.data;
+
+      // lưu token
+      localStorage.setItem("token", token);
+
+      // redux
+      dispatch(
+        loginSuccess({
+          user,
+          token,
+        }),
+      );
+      if (user.role === "REQUESTER") {
+        navigate("/medicine");
+        return;
+      }
+      navigate("/dashboard");
+    } catch (err) {
+      console.log(err);
       setError("Sai tài khoản hoặc mật khẩu");
-      return;
     }
-
-    dispatch(
-      login({
-        id: user.id,
-        name: user.name,
-        role: user.role,
-      }),
-    );
-
-    navigate("/dashboard");
   };
 
   return (

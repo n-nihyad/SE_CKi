@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { products as initialProducts } from "../../fakeDB";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../app/store";
+import { ROLES } from "../../../constants/role";
 
 export default function MedicinePage() {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -54,7 +55,7 @@ export default function MedicinePage() {
         </div>
 
         {/* ✅ BUTTON CHỈ MANAGER */}
-        {user?.role === "manager" && (
+        {user?.role === ROLES.MANAGER && (
           <button
             onClick={() => setOpen(true)}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold"

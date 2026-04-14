@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import bg1 from "../assets/images/slide1.jpg";
-import bg2 from "../assets/images/slide2.jpg";
-import bg3 from "../assets/images/slide3.jpg";
-import bg4 from "../assets/images/slide4.jpg";
+import bg1 from "../../assets/images/slide1.jpg";
+import bg2 from "../../assets/images/slide2.jpg";
+import bg3 from "../../assets/images/slide3.jpg";
+import bg4 from "../../assets/images/slide4.jpg";
 
 const backgroundImages = [bg1, bg2, bg3, bg4];
 

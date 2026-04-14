@@ -1,7 +1,10 @@
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import type { RootState } from "../app/store";
-import { logout } from "../features/auth/authSlice";
+import { ROUTES } from "../../constants/routes";
+import { ROLES } from "../../constants/role";
+import type { RootState } from "../../app/store";
+import { logout } from "../../features/auth/authSlice";
+import logo from "../../assets/images/logo.webp";
 
 import {
   LayoutDashboard,
@@ -12,70 +15,69 @@ import {
   LogOut,
   PackagePlus,
   PackageMinus,
+  FileClock,
 } from "lucide-react";
-
-import logo from "../assets/images/logo.webp";
 
 const menu = [
   {
     name: "Tổng quan",
-    path: "/dashboard",
+    path: ROUTES.DASHBOARD,
     icon: LayoutDashboard,
-    roles: ["storekeeper", "manager"],
+    roles: [ROLES.STOREKEEPER, ROLES.MANAGER],
   },
   {
     name: "Danh sách thuốc",
-    path: "/medicine",
+    path: ROUTES.MEDICINE,
     icon: Pill,
-    roles: ["requestor", "manager"],
+    roles: [ROLES.REQUESTER, ROLES.MANAGER],
   },
   {
     name: "Yêu cầu lấy thuốc",
-    path: "/medicine-request",
-    icon: History,
-    roles: ["requestor"],
+    path: ROUTES.MEDICINE_REQUEST,
+    icon: FileClock,
+    roles: [ROLES.REQUESTER],
   },
   {
     name: "Kho thuốc",
-    path: "/inventory",
+    path: ROUTES.INVENTORY,
     icon: Boxes,
-    roles: ["storekeeper", "manager"],
+    roles: [ROLES.STOREKEEPER, ROLES.MANAGER],
   },
   {
     name: "Lịch sử kho",
-    path: "/stock-history",
+    path: ROUTES.STOCK_HISTORY,
     icon: History,
-    roles: ["storekeeper", "manager"],
+    roles: [ROLES.STOREKEEPER, ROLES.MANAGER],
   },
   {
     name: "Yêu cầu xuất kho",
-    path: "/stock-export",
+    path: ROUTES.STOCK_EXPORT,
     icon: PackageMinus,
-    roles: ["storekeeper"],
+    roles: [ROLES.STOREKEEPER],
   },
   {
     name: "Thông báo nhập kho",
-    path: "/stock-import",
+    path: ROUTES.STOCK_IMPORT,
     icon: PackagePlus,
-    roles: ["storekeeper"],
+    roles: [ROLES.STOREKEEPER],
   },
   {
     name: "Kiểm kê",
-    path: "/audit",
+    path: ROUTES.AUDIT,
     icon: FileBarChart2,
-    roles: ["manager"],
+    roles: [ROLES.MANAGER],
   },
 ];
 
 const roleLabel: Record<string, string> = {
   requestor: "Người yêu cầu",
-  manager: "Quản lý kho",
-  storekeeper: "Thủ kho",
+  MANAGER: "Quản lý kho",
+  STOREKEEPER: "Thủ kho",
 };
 const roleColor: Record<string, string> = {
   requestor: "bg-blue-50 text-blue-600",
-  manager: "bg-violet-50 text-violet-600",
-  storekeeper: "bg-emerald-50 text-emerald-600",
+  MANAGER: "bg-violet-50 text-violet-600",
+  STOREKEEPER: "bg-emerald-50 text-emerald-600",
 };
 
 export default function Sidebar() {
@@ -95,7 +97,12 @@ export default function Sidebar() {
   return (
     <aside className="flex h-screen max-w-70 flex-col bg-white border-r border-slate-100 rounded-xl">
       <div className="flex gap-2 px-1 py-2 h-25">
-        <Link to="/dashboard" className="h-full">
+        <Link
+          to={
+            user?.role === ROLES.REQUESTER ? ROUTES.MEDICINE : ROUTES.DASHBOARD
+          }
+          className="h-full"
+        >
           <img
             src={logo}
             alt="logo"

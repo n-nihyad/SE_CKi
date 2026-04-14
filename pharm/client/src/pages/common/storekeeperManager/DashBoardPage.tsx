@@ -1,9 +1,10 @@
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../app/store";
+import { ROLES } from "../../../constants/role";
 
 export default function DashboardPage() {
   const user = useSelector((state: RootState) => state.auth.user);
-  const isRequestor = user?.role === "requestor";
+  const isRequestor = user?.role === ROLES.REQUESTER;
 
   const statsTop = [
     {

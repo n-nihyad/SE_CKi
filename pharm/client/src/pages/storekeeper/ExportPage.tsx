@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 /* ================= TYPES ================= */
 
@@ -38,10 +38,6 @@ const stockRequests: StockRequest[] = [
     items: [
       { productId: 1, productName: "Paracetamol 500mg", quantity: 120 },
       { productId: 2, productName: "Amoxicillin 250mg", quantity: 60 },
-      { productId: 3, productName: "Ibuprofen 400mg", quantity: 30 },
-      { productId: 4, productName: "Vitamin C", quantity: 50 },
-      { productId: 5, productName: "Aspirin", quantity: 80 },
-      { productId: 6, productName: "Omeprazole", quantity: 40 },
     ],
   },
   {
@@ -68,27 +64,13 @@ const batches: Batch[] = [
   },
   {
     id: 3,
-    productId: 1,
-    batchCode: "PARA-A3",
-    quantity: 100,
-    expiryDate: "2027-01-01",
-  },
-  {
-    id: 4,
     productId: 2,
     batchCode: "AMOX-B1",
     quantity: 20,
     expiryDate: "2026-05-01",
   },
   {
-    id: 5,
-    productId: 2,
-    batchCode: "AMOX-B2",
-    quantity: 25,
-    expiryDate: "2026-07-01",
-  },
-  {
-    id: 6,
+    id: 4,
     productId: 3,
     batchCode: "IBU-C1",
     quantity: 10,
@@ -102,9 +84,11 @@ export default function ExportPage() {
   const [selectedId, setSelectedId] = useState<number>(
     stockRequests[0]?.id ?? 0,
   );
+
   const [selectedProductId, setSelectedProductId] = useState<number | null>(
-    null,
+    stockRequests[0]?.items[0]?.productId ?? null,
   );
+
   const [exportItems, setExportItems] = useState<ExportItem[]>([]);
 
   const request = useMemo(
@@ -112,15 +96,7 @@ export default function ExportPage() {
     [selectedId],
   );
 
-  /* ================= FIX: SAFE SYNC ================= */
-  useEffect(() => {
-    if (!request?.items?.length) return;
-
-    setSelectedProductId(request.items[0].productId);
-    setExportItems([]);
-  }, [selectedId]); // ✅ FIX: chỉ depend primitive, tránh loop warning
-
-  /* ================= FEFO BATCH ================= */
+  /* ================= FEFO ================= */
 
   const relatedBatches = useMemo(() => {
     if (!selectedProductId) return [];
@@ -194,7 +170,11 @@ export default function ExportPage() {
         {stockRequests.map((r) => (
           <div
             key={r.id}
-            onClick={() => setSelectedId(r.id)}
+            onClick={() => {
+              setSelectedId(r.id);
+              setSelectedProductId(r.items[0]?.productId ?? null);
+              setExportItems([]);
+            }}
             className={`rounded-lg border p-3 cursor-pointer transition ${
               selectedId === r.id
                 ? "bg-blue-50 border-blue-300"
@@ -213,7 +193,7 @@ export default function ExportPage() {
       <div className="flex-1 grid grid-cols-[1fr_380px] gap-5 min-w-0">
         {/* BATCH PANEL */}
         <div className="flex flex-col rounded-xl border bg-white overflow-hidden">
-          {/* SCROLL NGANG - PRODUCTS */}
+          {/* PRODUCTS */}
           <div className="flex gap-2 px-5 py-3 border-b overflow-x-auto whitespace-nowrap">
             {request?.items.map((item) => (
               <button
@@ -230,7 +210,7 @@ export default function ExportPage() {
             ))}
           </div>
 
-          {/* SCROLL DỌC - BATCHES */}
+          {/* BATCHES */}
           <div className="flex-1 overflow-y-auto divide-y">
             {relatedBatches.length === 0 ? (
               <p className="text-center text-slate-300 py-10">

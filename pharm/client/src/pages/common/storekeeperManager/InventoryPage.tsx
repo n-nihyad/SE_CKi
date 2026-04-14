@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import type { RootState } from "../../../app/store";
 import { products } from "../../fakeDB";
 import Stat from "../../../components/Stat";
+import { ROLES } from "../../../constants/role";
 
 /* ================= TYPES ================= */
 
@@ -220,7 +221,7 @@ export default function InventoryPage() {
             Sơ đồ kho
           </button>
 
-          {role === "storekeeper" && (
+          {role === ROLES.STOREKEEPER && (
             <button
               onClick={openAddModal}
               className="bg-blue-600 text-white px-4 py-2 rounded-lg"
@@ -229,7 +230,7 @@ export default function InventoryPage() {
             </button>
           )}
 
-          {role === "manager" && (
+          {role === ROLES.MANAGER && (
             <button
               onClick={() => setOpenRequest(true)}
               className="bg-blue-600 text-white px-4 py-2 rounded-lg"
@@ -311,7 +312,7 @@ export default function InventoryPage() {
               <div>{b.warehouse}</div>
               <div>{b.position}</div>
               <div>
-                {role === "storekeeper" && (
+                {role === ROLES.STOREKEEPER && (
                   <div className="flex gap-2">
                     <button
                       onClick={() => openEditModal(b)}
@@ -334,29 +335,36 @@ export default function InventoryPage() {
       </div>
 
       {/* ===== STOREKEEPER MODAL ===== */}
-      {openModal && role === "storekeeper" && (
+      {openModal && role === ROLES.STOREKEEPER && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-xl w-96 flex flex-col gap-3">
             <h2 className="text-lg font-semibold">
-              {editingId ? "Cập nhật" : "Thêm lô"}
+              {editingId ? "Cập nhật" : "Thêm lô thuốc"}
             </h2>
 
-            <input
+            <label htmlFor="">Tên thuốc</label>
+            <select
               className="border p-2 rounded"
-              placeholder="Thuốc"
               value={form.productName}
               onChange={(e) =>
                 setForm({ ...form, productName: e.target.value })
               }
-            />
+            >
+              <option value="">-- Chọn thuốc --</option>
+              <option value="Paracetamol">Paracetamol</option>
+              <option value="Aspirin">Aspirin</option>
+              <option value="Ibuprofen">Ibuprofen</option>
+            </select>
 
+            <label htmlFor="">Mã lô</label>
             <input
               className="border p-2 rounded"
-              placeholder="Lô"
+              placeholder="Mã lô thuốc"
               value={form.batchName}
               onChange={(e) => setForm({ ...form, batchName: e.target.value })}
             />
 
+            <label htmlFor="">Số lượng</label>
             <input
               type="number"
               className="border p-2 rounded"
@@ -366,6 +374,7 @@ export default function InventoryPage() {
               }
             />
 
+            <label htmlFor="">Hạn sử dụng</label>
             <input
               type="date"
               className="border p-2 rounded"
@@ -373,9 +382,24 @@ export default function InventoryPage() {
               onChange={(e) => setForm({ ...form, expiryDate: e.target.value })}
             />
 
+            <label htmlFor="">Kho</label>
+            <select
+              className="border p-2 rounded"
+              value={form.productName}
+              onChange={(e) =>
+                setForm({ ...form, productName: e.target.value })
+              }
+            >
+              <option value="">-- Kho chứa thuốc --</option>
+              <option value="Paracetamol">Kho A</option>
+              <option value="Aspirin">Kho B</option>
+              <option value="Ibuprofen">Kho C</option>
+            </select>
+
+            <label htmlFor="">Vị trí</label>
             <input
               className="border p-2 rounded"
-              placeholder="Vị trí"
+              placeholder="Vị trí trong kho (Optional)"
               value={form.position}
               onChange={(e) => setForm({ ...form, position: e.target.value })}
             />
@@ -394,7 +418,7 @@ export default function InventoryPage() {
       )}
 
       {/* ===== MANAGER MODAL (TÁCH RIÊNG) ===== */}
-      {openRequest && role === "manager" && (
+      {openRequest && role === ROLES.MANAGER && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="bg-white w-100 rounded-xl p-5 flex flex-col gap-3">
             <h2 className="text-lg font-semibold">Gửi thông báo nhập kho</h2>

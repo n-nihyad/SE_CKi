@@ -1,15 +1,16 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "../app/store";
+import { ROUTES } from "../constants/routes";
 
 interface ProtectedRouteProps {
   allowedRoles?: string[];
 }
 
 const homeByRole: Record<string, string> = {
-  requestor: "/medicine",
-  manager: "/dashboard",
-  storekeeper: "/dashboard",
+  requestor: ROUTES.MEDICINE,
+  manager: ROUTES.DASHBOARD,
+  storekeeper: ROUTES.DASHBOARD,
 };
 
 export default function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
