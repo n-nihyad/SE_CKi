@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+
+const User = require("../models/user.model");
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -98,3 +99,7 @@ exports.forgotPassword = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+exports.logout = async (req, res) => {};
+
+exports.resetPassword = async (req, res) => {};

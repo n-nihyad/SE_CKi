@@ -16,7 +16,7 @@ import ProfilePage from "../pages/common/ProfilePage";
 import TakeRequestPage from "../pages/pharmacist/TakeRequestPage";
 // import ReturnMedicinePage from "../pages/pharmacist/ReturnRequestPage";
 import RequestHistoryPage from "../pages/pharmacist/RequestHistoryPage";
-import MedicinePage from "../pages/common/requesterManager/MedicinePage";
+import MedicinePage from "../pages/common/MedicinePage";
 
 import InventoryPage from "../pages/common/storekeeperManager/InventoryPage";
 import StockHistoryPage from "../pages/common/storekeeperManager/StockHistoryPage";

@@ -1,8 +1,9 @@
 import { useMemo, useState } from "react";
-import { products as initialProducts } from "../../fakeDB";
+import { products as initialProducts } from "../fakeDB";
 import { useSelector } from "react-redux";
-import type { RootState } from "../../../app/store";
-import { ROLES } from "../../../constants/role";
+import type { RootState } from "../../app/store";
+import { ROLES } from "../../constants/role";
+import MedicineCard from "../../components/MedicineCard";
 
 export default function MedicinePage() {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -58,7 +59,7 @@ export default function MedicinePage() {
         {user?.role === ROLES.MANAGER && (
           <button
             onClick={() => setOpen(true)}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg text-yxl font-semibold"
           >
             + Thêm thuốc
           </button>
@@ -66,47 +67,31 @@ export default function MedicinePage() {
       </div>
 
       {/* SEARCH */}
-      <div className="bg-white rounded-xl p-4 flex items-center gap-3">
+      <div className="bg-white rounded-xl p-4 flex items-center justify-between gap-3">
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Tìm theo ID, tên, mô tả..."
-          className="flex-1 rounded-lg border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-200"
+          className="flex-2 rounded-lg border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-200 max-w-270"
         />
 
-        <div className="shrink-0 text-sm text-slate-500">
+        <div className="me-2 text-sm text-slate-500">
           Tổng: <b>{filteredProducts.length}</b> thuốc
         </div>
       </div>
 
       {/* LIST */}
-      <div className="flex-1 bg-white border rounded-xl overflow-hidden">
-        <div className="grid grid-cols-[120px_1.2fr_2.3fr] bg-slate-100 p-3 text-sm font-semibold text-slate-600">
-          <div>ID</div>
-          <div>Tên thuốc</div>
-          <div>Mô tả</div>
-        </div>
-
-        <div className="overflow-y-auto">
-          {filteredProducts.length === 0 ? (
-            <div className="p-6 text-center text-slate-400">
-              Không tìm thấy thuốc
-            </div>
-          ) : (
-            filteredProducts.map((p) => (
-              <div
-                key={p.id}
-                className="grid grid-cols-[120px_1.2fr_2.3fr] p-3 text-sm border-b hover:bg-slate-50"
-              >
-                <div className="font-medium text-slate-700">#{p.id}</div>
-                <div className="text-slate-800 font-medium">{p.name}</div>
-                <div className="text-slate-500">
-                  {p.description ?? "Không có mô tả"}
-                </div>
-              </div>
-            ))
-          )}
-        </div>
+      <div className="grid grid-cols-5 gap-3 p-3 overflow-y-auto content-start">
+        <MedicineCard />
+        <MedicineCard />
+        <MedicineCard />
+        <MedicineCard />
+        <MedicineCard />
+        <MedicineCard />
+        <MedicineCard />
+        <MedicineCard />
+        <MedicineCard />
+        <MedicineCard />
       </div>
 
       {/* ===== MODAL ===== */}
