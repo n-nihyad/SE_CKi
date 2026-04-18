@@ -2,8 +2,18 @@ const db = require("../config/db"); // mysql2 pool.promise()
 
 const Medicine = {
   // GET ALL
-  async getAll() {
-    const [rows] = await db.query("SELECT * FROM medicines");
+  async getAll(status = "active") {
+    let sql = "SELECT * FROM medicines";
+
+    if (status === "active") {
+      sql += " WHERE is_deleted = 0";
+    } else if (status === "deleted") {
+      sql += " WHERE is_deleted = 1";
+    }
+
+    sql += " ORDER BY created_at DESC";
+
+    const [rows] = await db.query(sql);
     return rows;
   },
 
@@ -15,47 +25,55 @@ const Medicine = {
 
   // CREATE
   async create(data) {
-    const { name, description, price, quantity } = data;
+    const { name, description, image } = data;
 
     const [result] = await db.query(
-      `INSERT INTO medicines (name, description, price, quantity)
-       VALUES (?, ?, ?, ?)`,
-      [name, description, price, quantity],
+      `INSERT INTO medicines (name, description, img_path)
+       VALUES (?, ?, ?)`,
+      [name, description, image],
     );
 
     return {
       id: result.insertId,
       name,
       description,
-      price,
-      quantity,
+      image,
     };
   },
 
   // UPDATE
   async update(id, data) {
-    const { name, description, price, quantity } = data;
+    let query = `UPDATE medicines SET name = ?, description = ?`;
+    let params = [data.name, data.description];
 
-    await db.query(
-      `UPDATE medicines
-       SET name = ?, description = ?, price = ?, quantity = ?
-       WHERE id = ?`,
-      [name, description, price, quantity, id],
-    );
+    if (data.image !== undefined) {
+      query += `, img_path = ?`;
+      params.push(data.image);
+    }
+
+    query += ` WHERE id = ?`;
+    params.push(id);
+
+    await db.query(query, params);
 
     return {
       id,
-      name,
-      description,
-      price,
-      quantity,
+      ...data,
     };
   },
 
   // DELETE
   async remove(id) {
-    await db.query("DELETE FROM medicines WHERE id = ?", [id]);
-    return { message: "Deleted successfully" };
+    await db.query(
+      `UPDATE medicines
+      SET is_deleted = 1
+      WHERE id = ?`,
+      [id],
+    );
+  },
+
+  async restore(id) {
+    await db.query(`UPDATE medicines SET is_deleted = 0 WHERE id = ?`, [id]);
   },
 };
 

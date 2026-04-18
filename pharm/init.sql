@@ -28,10 +28,12 @@ CREATE TABLE users (
 -- =============================
 CREATE TABLE medicines (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    img_path VARCHAR(100),
+    img_path VARCHAR(255),
     name VARCHAR(150) NOT NULL,
     description TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    is_deleted BOOLEAN DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- =============================
@@ -142,6 +144,13 @@ VALUES
   'MANAGER'
 ),
 (
+  'request',
+  '$2b$10$2Bj.HDGwWK7hxmXs1iSZke9sEdLH5Sn7d.bqc4EWVIhGi3mxbJkFW',
+  'REQUESTER One',
+  'request@gmail.com',
+  'REQUESTER'
+),
+(
   'store',
   '$2b$10$2Bj.HDGwWK7hxmXs1iSZke9sEdLH5Sn7d.bqc4EWVIhGi3mxbJkFW',
   'Store Keeper One',
@@ -149,12 +158,12 @@ VALUES
   'STOREKEEPER'
 );
 
-INSERT INTO medicines (name, description) VALUES
-('Paracetamol 500mg', 'Giảm đau, hạ sốt'),
-('Amoxicillin 500mg', 'Kháng sinh điều trị nhiễm khuẩn'),
-('Ibuprofen 200mg', 'Chống viêm, giảm đau'),
-('Vitamin C 1000mg', 'Tăng đề kháng'),
-('Omeprazole 20mg', 'Điều trị đau dạ dày');
+INSERT INTO medicines (name, description, img_path) VALUES
+('Panadol 500mg', 'Giảm đau, hạ sốt', '/uploads/panadol_500mg.webp'),
+('Amoxicillin 500mg', 'Kháng sinh điều trị nhiễm khuẩn', '/uploads/amoxicillin_500mg.png'),
+('Ibuprofen 200mg', 'Chống viêm, giảm đau', '/uploads/ibuprofen_200mg.jpg'),
+('Vitamin C 1000mg', 'Tăng đề kháng', '/uploads/vitaminC_1000mg.webp'),
+('Omeprazole 20mg', 'Điều trị đau dạ dày', '/uploads/omeprazol_200mg.jpg');
 
 INSERT INTO warehouses (name, floor, temperature, type) VALUES
 ('Kho A', 1, 25, 'NORMAL'),

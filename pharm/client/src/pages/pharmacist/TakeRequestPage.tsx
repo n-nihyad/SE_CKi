@@ -1,20 +1,46 @@
-import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { products, stockRequests } from "../fakeDB";
-import type { RequestItem, StockRequest } from "../fakeDB";
+import { useMemo, useState, useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
+import type { Medicine } from "../../types/medicine";
+import { getMedicines } from "../../api/medicineApi";
+// import { createRequest } from "../../api/requestApi";
+
 import ProductSelector from "../../components/ProductSelector";
 import QuantityStepper from "../../components/QuantityStepper";
 
+type RequestItem = {
+  productId: number;
+  productName: string;
+  quantity: number;
+};
+
 export default function TakeMedicinePage() {
-  const [productId, setProductId] = useState(products[0]?.id || 1);
+  // const navigate = useNavigate(); // medicine-request // đã gửi yêu cầu xuất kho
+
+  const [products, setProducts] = useState<Medicine[]>([]);
+  const [productId, setProductId] = useState<number | null>(null);
+
   const [quantity, setQuantity] = useState(1);
   const [requestItems, setRequestItems] = useState<RequestItem[]>([]);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const res = await getMedicines("active");
 
+      setProducts(res.data);
+
+      // 👇 set default luôn ở đây
+      if (res.data.length > 0) {
+        setProductId(res.data[0].id);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  // ✅ SELECTED PRODUCT
   const selectedProduct = useMemo(
     () => products.find((p) => p.id === productId),
-    [productId],
+    [productId, products],
   );
 
   const totalQuantity = requestItems.reduce(
@@ -50,7 +76,7 @@ export default function TakeMedicinePage() {
     setQuantity(1);
   };
 
-  // increase quantity in cart
+  // increase
   const handleIncrease = (id: number) =>
     setRequestItems((prev) =>
       prev.map((item) =>
@@ -58,7 +84,7 @@ export default function TakeMedicinePage() {
       ),
     );
 
-  // decrease quantity in cart
+  // decrease
   const handleDecrease = (id: number) =>
     setRequestItems((prev) =>
       prev
@@ -70,31 +96,26 @@ export default function TakeMedicinePage() {
         .filter((item) => item.quantity > 0),
     );
 
-  // remove item
+  // remove
   const handleRemove = (id: number) =>
-    setRequestItems((prev) => prev.filter((item) => item.productId !== id));
+    setRequestItems((prev) => prev.filter((i) => i.productId !== id));
 
-  // submit request
-  const handleSubmit = () => {
-    if (requestItems.length === 0) return;
-
-    const newRequest: StockRequest = {
-      id: stockRequests.length + 1,
-      type: "take",
-      items: requestItems.map((i) => ({
-        productId: i.productId,
-        productName: i.productName,
-        quantity: i.quantity,
-      })),
-      status: "pending",
-      createdAt: new Date().toISOString().split("T")[0],
-    };
-
-    stockRequests.push(newRequest);
-
-    alert("Đã gửi yêu cầu xuất kho!");
-
-    navigate("/medicine-request");
+  // ✅ SUBMIT → API
+  const handleSubmit = async () => {
+    // if (requestItems.length === 0) return;
+    // try {
+    //   await createRequest({
+    //     type: "take",
+    //     items: requestItems.map((i) => ({
+    //       productId: i.productId,
+    //       quantity: i.quantity,
+    //     })),
+    //   });
+    //   alert("Đã gửi yêu cầu xuất kho!");
+    //   navigate("/medicine-request");
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
 
   return (
@@ -121,11 +142,11 @@ export default function TakeMedicinePage() {
       {/* BODY */}
       <div className="grid flex-1 grid-cols-1 gap-5 xl:grid-cols-[380px_1fr]">
         {/* LEFT */}
-        <div className="flex flex-col gap-4 rounded-xl border border-slate-200 bg-white p-5">
-          <div className="border-b border-slate-100 pb-4">
+        <div className="flex flex-col gap-4 rounded-xl border bg-white p-5">
+          <div className="border-b border- pb-4">
             <p className="text-sm font-semibold text-slate-700">Thêm thuốc</p>
             <p className="mt-0.5 text-xs text-slate-400">
-              Mỗi yêu cầu có thể chứa nhiều loại.
+              *Lưu ý: chỉ hiển thị thuốc có trong kho.
             </p>
           </div>
 
@@ -154,9 +175,9 @@ export default function TakeMedicinePage() {
         </div>
 
         {/* RIGHT */}
-        <div className="flex flex-col rounded-xl border border-slate-200 bg-white overflow-hidden">
+        <div className="flex flex-col rounded-xl border bg-white overflow-hidden">
           {/* HEADER */}
-          <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+          <div className="flex items-center justify-between border-b px-5 py-4">
             <div>
               <p className="text-sm font-semibold text-slate-700">
                 Danh sách thuốc yêu cầu
@@ -223,7 +244,7 @@ export default function TakeMedicinePage() {
           </div>
 
           {/* FOOTER */}
-          <div className="border-t border-slate-100 bg-slate-50 px-5 py-4">
+          <div className="border-t bg-slate-50 px-5 py-4">
             <div className="mb-3 flex justify-between text-sm">
               <span className="text-slate-400">Tổng số lượng</span>
               <span className="text-lg font-bold text-slate-800">

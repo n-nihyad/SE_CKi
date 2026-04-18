@@ -1,9 +1,14 @@
 const Medicine = require("../models/medicine.model");
+const fs = require("fs");
+const path = require("path");
 
 // GET ALL
 exports.getAll = async (req, res) => {
   try {
-    const data = await Medicine.getAll();
+    const status = req.query.status || "active";
+
+    const data = await Medicine.getAll(status);
+
     res.json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -13,16 +18,21 @@ exports.getAll = async (req, res) => {
 // CREATE
 exports.create = async (req, res) => {
   try {
-    const { name, price } = req.body;
+    const { name, description } = req.body;
+    const image = req.file ? `/uploads/${req.file.filename}` : "";
 
-    // validate đơn giản
-    if (!name || !price) {
+    if (!name || !description) {
       return res.status(400).json({
-        message: "Name and price are required",
+        message: "Name and description are required",
       });
     }
 
-    const newMedicine = await Medicine.create(req.body);
+    const newMedicine = await Medicine.create({
+      name,
+      description,
+      image,
+    });
+
     res.status(201).json(newMedicine);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -41,9 +51,44 @@ exports.update = async (req, res) => {
       });
     }
 
-    const updated = await Medicine.update(id, req.body);
+    const { name, description } = req.body;
+
+    if (!name || !description) {
+      return res.status(400).json({
+        message: "Name and description are required",
+      });
+    }
+
+    const updateData = {
+      name,
+      description,
+    };
+
+    // 👉 nếu có upload ảnh mới
+    if (req.file) {
+      const newImage = `/uploads/${req.file.filename}`;
+      updateData.image = newImage;
+
+      // 🔥 XOÁ FILE CŨ
+      if (existing.img_path) {
+        const oldPath = path.join(
+          __dirname,
+          "..",
+          "assets",
+          existing.img_path.replace(/^\/+/, ""), // 👈 fix path
+        );
+
+        if (fs.existsSync(oldPath)) {
+          fs.unlinkSync(oldPath);
+        }
+      }
+    }
+
+    const updated = await Medicine.update(id, updateData);
+
     res.json(updated);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: err.message });
   }
 };
@@ -62,6 +107,18 @@ exports.remove = async (req, res) => {
 
     await Medicine.remove(id);
     res.json({ message: "Deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.restore = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    await Medicine.restore(id);
+
+    res.json({ message: "Restored successfully" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
